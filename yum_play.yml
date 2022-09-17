@@ -1,0 +1,17 @@
+---
+
+ - name: To remove screen package from all hosts defined in inventory file.
+   hosts: all
+   remote_user: ansicli
+   become: true
+   
+   tasks:
+    - name: Remove screen 
+      ansible.builtin.yum:
+        name: screen
+        state: removed
+
+    - name: Install nmap 
+      ansible.builtin.yum:
+        name: nmap
+        state: latest
