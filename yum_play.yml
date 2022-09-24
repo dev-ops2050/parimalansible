@@ -1,17 +1,25 @@
 ---
-
- - name: To remove screen package from all hosts defined in inventory file.
+ - name: Install screen & nmap packages on servers. 
    hosts: all
    remote_user: ansicli
    become: true
-   
-   tasks:
-    - name: Remove screen 
-      ansible.builtin.yum:
-        name: screen
-        state: removed
 
-    - name: Install nmap 
-      ansible.builtin.yum:
-        name: nmap
-        state: latest
+   tasks:
+   - name: Install screen & nmap packages on Centos servers. 
+     ansible.builtin.yum:	
+       name: 
+       - screen
+       - nmap
+       state: latest
+     when: ansible_distribution == "CentOS"
+     tags: centos
+
+
+   - name: Install screen & nmap packages on Ubuntu servers. 
+     ansible.builtin.apt:	
+       name: 
+       - screen
+       - nmap
+       state: latest
+     when: ansible_distribution == "Ubuntu"
+     tags: ubuntu 
